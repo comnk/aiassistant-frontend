@@ -35,8 +35,8 @@ const Chat = () => {
       });
 
       const data = await response.json();
-      console.log(data.answer);
-      const botMessage = { text: data.answer };
+      console.log(data);
+      const botMessage = { text: data };
       setMessages(currentMessages => [...currentMessages, botMessage]);
     };
 
