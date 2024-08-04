@@ -22,20 +22,22 @@ const Chat = () => {
         chatHistory: [...messages, userMessage],
         question: inputText,
       }
-      console.log(userMessage);
+
       setMessages([...messages, userMessage]);
       setInputText('');
+
+      console.log(body);
       
       const response = await fetch('http://localhost:5000/ask/${task}', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       });
-      
+
       const data = await response.json();
+      console.log(data.answer);
       const botMessage = { text: data.answer };
       setMessages(currentMessages => [...currentMessages, botMessage]);
-      console.log(response);
     };
 
     return (
@@ -63,6 +65,12 @@ const Chat = () => {
 
         {/* Main Content */}
         <div className="flex-grow flex flex-col justify-center relative">
+        <div className="chat-messages">
+          {messages.map((message, index) => (
+            <div key={index}>{message.text}</div>
+          ))}
+          <div ref={messagesEndRef} />
+        </div>
           <div className="absolute bottom-0 left-0 right-0 px-6 py-3">
             <input
               type="text"
